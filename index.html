@@ -9,7 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
 <style>
-  /* ─────────── RESET & VARIABLES (enhanced) ─────────── */
+  /* ─────────── RESET & VARIABLES ─────────── */
   * {
     margin: 0;
     padding: 0;
@@ -17,70 +17,74 @@
   }
 
   :root {
-    --bg: #f0eff8;
+    --bg: #f4f3fa;
     --surface: #ffffff;
     --nav: #0f0c1f;
-    --nav-text: rgba(255,255,255,0.55);
+    --nav-text: rgba(255,255,255,0.6);
     --nav-active: #ffffff;
     --lavender: #c4b5fd;
     --lavender-d: #7c3aed;
     --pink: #fbcfe8;
     --pink-d: #db2777;
     --mint: #a7f3d0;
+    --mint-d: #059669;
+    --peach: #ffedd5;
     --text: #1e1b4b;
     --text-2: #5b5890;
     --text-3: #9ca3af;
-    --border: rgba(0,0,0,0.07);
-    --shadow-sm: 0 8px 20px rgba(99, 74, 196, 0.08);
-    --shadow-md: 0 20px 35px -10px rgba(99, 74, 196, 0.2);
-    --shadow-lg: 0 25px 45px -12px rgba(99, 74, 196, 0.25);
-    --r: 24px;
-    --r-sm: 14px;
+    --border: rgba(0,0,0,0.06);
+    --shadow-sm: 0 4px 12px rgba(99, 74, 196, 0.04);
+    --shadow-md: 0 12px 24px -4px rgba(99, 74, 196, 0.08);
+    --shadow-lg: 0 20px 40px -8px rgba(99, 74, 196, 0.12);
+    --r: 20px;
+    --r-sm: 12px;
     --font-display: 'DM Serif Display', Georgia, serif;
     --font-body: 'DM Sans', system-ui, sans-serif;
     --nav-w: 260px;
     --header-h: 72px;
-    --transition-default: all 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    --transition-default: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  html {
+  body.dark-theme {
+    --bg: #090714;
+    --surface: #141226;
+    --text: #f1f0fb;
+    --text-2: #9e9bbd;
+    --text-3: #64618a;
+    --border: rgba(255,255,255,0.07);
+    --shadow-sm: 0 4px 12px rgba(0,0,0,0.3);
+    --shadow-md: 0 12px 24px -4px rgba(0,0,0,0.4);
+    --shadow-lg: 0 20px 40px -8px rgba(0,0,0,0.5);
+  }
+
+  html, body {
     font-family: var(--font-body);
     background: var(--bg);
     color: var(--text);
-  }
-
-  body {
-    display: flex;
     min-height: 100vh;
-    overflow-x: hidden;
-    transition: background 0.2s;
+    transition: background var(--transition-default);
   }
 
-  /* ------ AUTH MODULE (glass, modern) ------ */
+  /* ------ AUTH MODULE ------ */
   .auth-overlay {
     position: fixed;
     inset: 0;
-    background: radial-gradient(circle at 20% 30%, rgba(124,58,237,0.08), rgba(0,0,0,0.02));
-    backdrop-filter: blur(2px);
+    background: radial-gradient(circle at 50% 30%, rgba(124,58,237,0.08), var(--bg));
     z-index: 2000;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 1.5rem;
-    transition: all 0.3s ease;
   }
 
   .auth-card {
-    max-width: 460px;
+    max-width: 420px;
     width: 100%;
-    background: rgba(255, 255, 255, 0.96);
-    backdrop-filter: blur(8px);
-    border-radius: 36px;
-    box-shadow: var(--shadow-lg), 0 0 0 1px rgba(124,58,237,0.1);
-    padding: 2.2rem 2rem;
-    transform: translateY(0);
-    animation: fadeSlideUp 0.5s ease;
-    transition: transform 0.2s;
+    background: var(--surface);
+    border-radius: 28px;
+    box-shadow: var(--shadow-lg), 0 0 0 1px var(--border);
+    padding: 2.5rem 2rem;
+    animation: fadeSlideUp 0.4s ease;
   }
 
   .auth-logo {
@@ -88,147 +92,465 @@
     align-items: center;
     gap: 10px;
     justify-content: center;
-    margin-bottom: 1.8rem;
+    margin-bottom: 1.2rem;
   }
 
   .auth-logo .logo-mark {
-    width: 42px;
-    height: 42px;
-    background: linear-gradient(135deg, #a78bfa, #ec4899);
-    border-radius: 14px;
+    width: 38px;
+    height: 38px;
+    background: linear-gradient(135deg, #7c3aed, #ec4899);
+    border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 22px;
+    font-size: 20px;
     color: white;
   }
 
   .auth-title {
-    font-size: 1.9rem;
+    font-size: 1.75rem;
     font-family: var(--font-display);
     text-align: center;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
   }
 
   .auth-switch {
     display: flex;
-    gap: 0.8rem;
-    justify-content: center;
+    gap: 0.5rem;
+    background: var(--bg);
+    padding: 4px;
+    border-radius: 30px;
     margin-bottom: 1.8rem;
   }
 
   .auth-switch button {
+    flex: 1;
     background: transparent;
     border: none;
-    font-size: 1rem;
+    font-family: var(--font-body);
+    font-size: 0.9rem;
     font-weight: 600;
-    padding: 0.5rem 1rem;
-    border-radius: 60px;
+    padding: 0.6rem;
+    border-radius: 24px;
     cursor: pointer;
     transition: var(--transition-default);
     color: var(--text-2);
   }
 
   .auth-switch button.active {
-    background: var(--lavender-d);
-    color: white;
-    box-shadow: 0 6px 14px rgba(124,58,237,0.3);
+    background: var(--surface);
+    color: var(--text);
+    box-shadow: var(--shadow-sm);
   }
 
   .auth-field {
-    margin-bottom: 1.2rem;
+    margin-bottom: 1rem;
   }
 
   .auth-field input {
     width: 100%;
-    padding: 14px 18px;
-    border-radius: 20px;
+    padding: 14px 16px;
+    border-radius: 14px;
     border: 1.5px solid var(--border);
-    background: white;
+    background: var(--bg);
+    color: var(--text);
     font-family: var(--font-body);
     font-size: 0.95rem;
-    transition: 0.2s;
+    transition: var(--transition-default);
     outline: none;
   }
 
   .auth-field input:focus {
     border-color: var(--lavender-d);
-    box-shadow: 0 0 0 3px rgba(124,58,237,0.15);
+    background: var(--surface);
   }
 
   .auth-btn {
     width: 100%;
-    background: linear-gradient(135deg, #7c3aed, #c2410c);
+    background: linear-gradient(135deg, #7c3aed, #db2777);
     border: none;
     padding: 14px;
-    border-radius: 40px;
-    font-weight: 700;
+    border-radius: 14px;
+    font-weight: 600;
     color: white;
     font-size: 1rem;
     cursor: pointer;
-    transition: transform 0.15s, box-shadow 0.2s;
+    transition: var(--transition-default);
     margin-top: 0.5rem;
   }
 
   .auth-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 22px rgba(124,58,237,0.3);
+    opacity: 0.95;
+    transform: translateY(-1px);
   }
 
   .error-msg {
     color: #e11d48;
-    font-size: 0.75rem;
+    font-size: 0.8rem;
     margin-top: 0.3rem;
-    padding-left: 0.5rem;
+    text-align: center;
   }
 
-  /* hide app until auth */
-  .app-hidden {
-    display: none !important;
-  }
-
-  /* advanced UI: glassmorphism + micro */
-  .card, .kpi-card, .progress-hero, .ai-hero {
-    transition: var(--transition-default);
-  }
-
-  .card:hover, .kpi-card:hover {
-    transform: translateY(-3px);
-  }
-
-  /* sidebar enhanced */
+  /* ------ APP LAYOUT STRUCTURE ------ */
   .sidebar {
-    backdrop-filter: blur(12px);
-    background: rgba(15, 12, 31, 0.96);
-    border-right: 1px solid rgba(255,255,255,0.1);
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    width: var(--nav-w);
+    background: var(--nav);
+    color: var(--nav-text);
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem 1rem;
+    z-index: 100;
+    transition: transform var(--transition-default);
+  }
+
+  .sidebar-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0.5rem 0.8rem 1.5rem;
+    color: white;
+  }
+
+  .sidebar-logo .logo-mark {
+    font-size: 24px;
+    color: var(--lavender);
+  }
+
+  .logo-text { font-weight: 700; font-size: 1.1rem; }
+  .logo-sub { font-size: 0.75rem; opacity: 0.5; }
+
+  .nav-section {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 1.2rem 0.8rem 0.4rem;
+    font-weight: 700;
+    opacity: 0.4;
   }
 
   .nav-item {
-    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0.75rem 0.8rem;
+    color: var(--nav-text);
+    text-decoration: none;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition-default);
   }
 
-  /* mobile fine-tune */
-  @media (max-width: 900px) {
-    :root {
-      --r: 20px;
-    }
-    .auth-card {
-      padding: 1.8rem;
-    }
-    .kpi-value {
-      font-size: 22px;
-    }
+  .nav-item:hover, .nav-item.active {
+    color: var(--nav-active);
+    background: rgba(255,255,255,0.06);
+  }
+
+  .nav-badge {
+    margin-left: auto;
+    background: var(--lavender-d);
+    color: white;
+    font-size: 0.7rem;
+    padding: 2px 6px;
+    border-radius: 20px;
+  }
+
+  .sidebar-bottom {
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .user-chip {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0.5rem;
+    border-radius: var(--r-sm);
+  }
+
+  .avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--lavender), var(--pink));
+    color: #100e2b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.9rem;
+  }
+
+  .user-info { flex: 1; min-width: 0; }
+  .user-name { font-size: 0.85rem; font-weight: 600; color: white; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
+  .user-plan { font-size: 0.75rem; opacity: 0.5; }
+
+  /* MAIN WORKSPACE */
+  .main {
+    margin-left: var(--nav-w);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    transition: margin var(--transition-default);
+  }
+
+  .header {
+    height: var(--header-h);
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 90;
+  }
+
+  .mobile-menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--text);
+    cursor: pointer;
+  }
+
+  .header-title { font-size: 1.1rem; font-weight: 600; }
+  .search-box {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--bg);
+    padding: 8px 16px;
+    border-radius: 20px;
+    width: 300px;
+  }
+  .search-box input {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text);
+    width: 100%;
+    font-family: var(--font-body);
+  }
+
+  .header-actions { display: flex; align-items: center; gap: 12px; }
+  .date-pill {
+    background: var(--bg);
+    padding: 8px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .icon-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    position: relative;
+  }
+  .notif-dot {
+    position: absolute;
+    top: 2px; right: 2px;
+    width: 8px; height: 8px;
+    background: #ef4444;
+    border-radius: 50%;
+  }
+
+  .content { padding: 2rem; flex: 1; }
+  .page { display: none; }
+  .page.active { display: block; animation: fadeSlideUp 0.3s ease; }
+
+  .greeting h1 { font-family: var(--font-display); font-size: 2.2rem; font-weight: 400; margin-bottom: 0.2rem; }
+  .greeting em { font-style: italic; font-weight: 400; color: var(--lavender-d); }
+  .greeting p { color: var(--text-2); font-size: 0.95rem; margin-bottom: 2rem; }
+
+  /* ------ COMPONENT CARDS & GRIDS ------ */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .kpi-card {
+    background: var(--surface);
+    border-radius: var(--r);
+    padding: 1.5rem;
+    border: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .kpi-blob {
+    position: absolute;
+    top: -50px; right: -50px;
+    width: 120px; height: 120px;
+    border-radius: 50%;
+    filter: blur(40px);
+    opacity: 0.3;
+    pointer-events: none;
+  }
+
+  .kpi-icon {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem; margin-bottom: 1rem;
+  }
+
+  .kpi-label { font-size: 0.85rem; color: var(--text-2); font-weight: 500; }
+  .kpi-value { font-size: 1.6rem; font-weight: 700; margin: 0.2rem 0; }
+  .kpi-change { font-size: 0.75rem; font-weight: 600; padding: 2px 6px; border-radius: 6px; }
+  .kpi-change.up { background: rgba(5,150,105,0.1); color: var(--mint-d); }
+  .kpi-change.down { background: rgba(220,38,38,0.1); color: #dc2626; }
+
+  .grid-2 { display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem; }
+  .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 1.5rem; }
+
+  .card {
+    background: var(--surface);
+    border-radius: var(--r);
+    padding: 1.5rem;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1.2rem;
+  }
+
+  .card-title { font-size: 1.05rem; font-weight: 600; }
+  .card-sub { font-size: 0.8rem; color: var(--text-2); }
+
+  .chart-wrap { position: relative; width: 100%; height: 100%; min-height: 200px; }
+
+  /* SPECIAL HERO ELEMENTS */
+  .progress-hero {
+    background: linear-gradient(135deg, #0f0c1f, #251c4a);
+    color: white;
+    border-radius: var(--r);
+    padding: 1.8rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: var(--shadow-md);
+  }
+
+  .ring-label { font-size: 0.9rem; font-weight: 600; opacity: 0.8; margin-bottom: 1rem; }
+  .ring-container { display: flex; align-items: center; gap: 1.5rem; justify-content: space-around; }
+
+  .ring-stats { display: flex; flex-direction: column; gap: 10px; }
+  .ring-stat-item { border-left: 2px solid rgba(255,255,255,0.15); padding-left: 10px; }
+  .ring-stat-val { font-size: 1.1rem; font-weight: 700; }
+  .ring-stat-lbl { font-size: 0.75rem; opacity: 0.6; }
+
+  .pastel-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .pastel-card {
+    padding: 1.2rem;
+    border-radius: var(--r-sm);
+    cursor: pointer;
+    position: relative;
+    transition: var(--transition-default);
+    color: #1e1b4b;
+  }
+  .pastel-card:hover { transform: scale(1.02); }
+  .p-icon { font-size: 1.4rem; margin-bottom: 0.5rem; }
+  .p-label { font-size: 0.8rem; opacity: 0.7; font-weight: 500; }
+  .p-value { font-size: 1.2rem; font-weight: 700; }
+  .p-sub { font-size: 0.7rem; opacity: 0.6; }
+  .p-arrow { position: absolute; bottom: 12px; right: 12px; font-weight: bold; }
+
+  /* RECENT ACTIVITY FEED */
+  .feed-item {
+    display: flex;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .feed-item:last-child { border-bottom: none; }
+  .feed-icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; }
+  .feed-content { flex: 1; }
+  .feed-title { font-size: 0.85rem; font-weight: 500; }
+  .feed-time { font-size: 0.75rem; color: var(--text-3); }
+
+  /* DATA TABLES */
+  .table-wrap { width: 100%; overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem; }
+  th { padding: 10px; color: var(--text-2); font-weight: 600; border-bottom: 2px solid var(--border); }
+  td { padding: 12px 10px; border-bottom: 1px solid var(--border); }
+
+  /* AI CARD EXTENSION */
+  .ai-hero {
+    background: linear-gradient(135deg, #6d28d9, #4c1d95);
+    color: white; border-radius: var(--r); padding: 1.8rem; position: relative; overflow: hidden;
+  }
+  .ai-badge { background: rgba(255,255,255,0.2); padding: 4px 8px; border-radius: 20px; font-size: 0.7rem; font-weight: 700; }
+  .ai-insights { margin: 1.5rem 0; display: flex; flex-direction: column; gap: 12px; }
+  .ai-row { display: flex; gap: 10px; font-size: 0.9rem; align-items: flex-start; }
+  .ai-generate-btn {
+    background: white; color: #6d28d9; border: none; padding: 10px 18px; border-radius: 20px;
+    font-weight: 600; cursor: pointer; font-size: 0.85rem; transition: var(--transition-default);
+  }
+  .ai-generate-btn:hover { background: #f3e8ff; }
+
+  /* UTILITIES & CHIPS */
+  .chip { padding: 3px 8px; border-radius: 6px; font-size: 0.75rem; font-weight: 600; display: inline-block; }
+  .chip-purple { background: #f3e8ff; color: #6d28d9; }
+  .chip-pink { background: #fce7f3; color: #db2777; }
+  .chip-green { background: #d1fae5; color: #059669; }
+  .chip-outline { border: 1px solid var(--border); color: var(--text-2); }
+
+  .integration-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1rem; }
+  .int-tile {
+    background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-sm);
+    padding: 1rem; display: flex; align-items: center; justify-content: space-between; font-weight: 500;
+  }
+  .int-status { font-size: 0.8rem; font-weight: 600; color: var(--text-3); cursor: pointer; }
+  .int-connected { color: var(--mint-d); }
+
+  .report-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--border); }
+  .btn-sm { padding: 6px 12px; border-radius: 8px; border: none; font-weight: 600; cursor: pointer; font-size: 0.8rem; }
+  .btn-primary { background: var(--lavender-d); color: white; }
+
+  .form-row { display: flex; gap: 1rem; margin-bottom: 1rem; }
+  .form-group { flex: 1; display: flex; flex-direction: column; gap: 6px; }
+  .form-group label { font-size: 0.8rem; font-weight: 600; color: var(--text-2); }
+  .form-input { padding: 10px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg); color: var(--text); }
+
+  .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 95; }
+
+  /* ─────────── RESPONSIVE RULES ─────────── */
+  @media (max-width: 992px) {
+    .grid-2 { grid-template-columns: 1fr; }
+    .sidebar { transform: translateX(-100%); }
+    .sidebar.open { transform: translateX(0); }
+    .main { margin-left: 0; }
+    .mobile-menu-btn { display: block; }
+    .overlay.show { display: block; }
   }
 
   @keyframes fadeSlideUp {
-    from {
-      opacity: 0;
-      transform: translateY(18px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 
   .toast-custom {
@@ -237,30 +559,23 @@
     right: 24px;
     background: #1e293b;
     color: white;
-    padding: 12px 20px;
-    border-radius: 60px;
-    font-size: 13px;
+    padding: 10px 18px;
+    border-radius: 40px;
+    font-size: 0.85rem;
     font-weight: 500;
     z-index: 9999;
-    box-shadow: 0 12px 25px rgba(0,0,0,0.2);
+    box-shadow: var(--shadow-md);
     animation: fadeSlideUp 0.2s ease;
-    backdrop-filter: blur(8px);
     pointer-events: none;
-  }
-
-  .logout-btn {
-    color: rgba(255,255,255,0.65);
-    transition: 0.2s;
-  }
-  .logout-btn:hover {
-    color: #f43f5e;
-    background: rgba(244,63,94,0.12);
   }
 </style>
 </head>
 <body>
 
-<!-- AUTH CONTAINER (MODERN) -->
+<!-- MOBILE OVERLAY -->
+<div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+
+<!-- AUTH CONTAINER -->
 <div id="authContainer" class="auth-overlay">
   <div class="auth-card">
     <div class="auth-logo">
@@ -272,20 +587,18 @@
       <button id="authLoginBtn" class="active">Sign in</button>
       <button id="authSignupBtn">Create account</button>
     </div>
-    <div id="authFormContainer">
-      <!-- login form dynamically inserted -->
-    </div>
+    <div id="authFormContainer"></div>
   </div>
 </div>
 
-<!-- OVERLAY MOBILE -->
-<div class="overlay" id="overlay" onclick="closeSidebar()"></div>
-
-<!-- SIDEBAR (app only) -->
+<!-- SIDEBAR -->
 <aside class="sidebar" id="sidebar" style="display: none;">
   <div class="sidebar-logo">
     <div class="logo-mark">✦</div>
-    <div><div class="logo-text">Insights Engine</div><div class="logo-sub">powered by GrowthOS</div></div>
+    <div>
+      <div class="logo-text">Insights Engine</div>
+      <div class="logo-sub">powered by GrowthOS</div>
+    </div>
   </div>
   <div class="nav-section">Main</div>
   <a class="nav-item active" onclick="navigate('dashboard',this)"><span class="icon">⊞</span> Dashboard</a>
@@ -301,7 +614,10 @@
   <div class="sidebar-bottom">
     <div class="user-chip" id="logoutUserBtn" style="cursor:pointer;">
       <div class="avatar" id="userAvatarInitial">R</div>
-      <div class="user-info"><div class="user-name" id="sidebarUserName">Rownok Ahmed</div><div class="user-plan">Pro Plan</div></div>
+      <div class="user-info">
+        <div class="user-name" id="sidebarUserName">Rownok Ahmed</div>
+        <div class="user-plan">Pro Plan</div>
+      </div>
       <span style="color:rgba(255,255,255,0.5);font-size:12px" id="logoutIcon">⤿</span>
     </div>
   </div>
@@ -320,61 +636,191 @@
       <div class="avatar" id="headerAvatar" style="cursor:pointer;" onclick="handleLogout()">R</div>
     </div>
   </header>
+  
   <div class="content">
     <!-- DASHBOARD PAGE -->
     <div class="page active" id="page-dashboard">
       <div class="greeting"><h1>Your Analytics <em>Overview</em></h1><p>August 2024 · Real-time pulse</p></div>
-      <div class="kpi-grid"><div class="kpi-card"><div class="kpi-blob" style="background:var(--lavender)"></div><div class="kpi-icon" style="background:#ede9fe">💰</div><div class="kpi-label">Total Revenue</div><div class="kpi-value" id="rev-val">$0</div><span class="kpi-change up">↑ 18.4%</span></div>
-      <div class="kpi-card"><div class="kpi-blob" style="background:var(--pink)"></div><div class="kpi-icon" style="background:#fce7f3">👥</div><div class="kpi-label">Active Users</div><div class="kpi-value" id="usr-val">0</div><span class="kpi-change up">↑ 12.1%</span></div>
-      <div class="kpi-card"><div class="kpi-blob" style="background:var(--mint)"></div><div class="kpi-icon" style="background:#d1fae5">🎯</div><div class="kpi-label">Conversion Rate</div><div class="kpi-value" id="cvr-val">0%</div><span class="kpi-change up">↑ 0.6%</span></div>
-      <div class="kpi-card"><div class="kpi-blob" style="background:var(--peach)"></div><div class="kpi-icon" style="background:#ffedd5">⏱️</div><div class="kpi-label">Avg Session</div><div class="kpi-value" id="sess-val">0s</div><span class="kpi-change down">↓ 0.3%</span></div></div>
-      <div class="grid-2"><div class="card"><div class="card-header"><div><div class="card-title">Revenue Analytics</div><div class="card-sub">Actual vs Predicted</div></div><div class="flex gap-2"><span class="chip chip-purple">Actual</span><span class="chip chip-outline">Predicted</span></div></div><div class="card-body"><div class="chart-wrap"><canvas id="revenueChart"></canvas></div></div></div>
-      <div class="progress-hero"><div style="position:relative;z-index:1"><div class="ring-label">Monthly Progress</div><div class="ring-container"><div style="position:relative"><svg width="130" height="130" style="transform:rotate(-90deg)"><circle cx="65" cy="65" r="55" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="10"/><circle cx="65" cy="65" r="55" fill="none" stroke="white" stroke-width="10" stroke-dasharray="345.4" stroke-dashoffset="34.5" stroke-linecap="round" id="progressRing"/></svg><div style="position:absolute;text-align:center;top:37%;left:0;right:0"><div style="font-size:26px;font-weight:800">90%</div><div style="font-size:10px;opacity:.7">of target</div></div></div><div class="ring-stats"><div class="ring-stat-item"><div class="ring-stat-val">$91.2K</div><div class="ring-stat-lbl">Revenue</div></div><div class="ring-stat-item"><div class="ring-stat-val">24.8K</div><div class="ring-stat-lbl">Users</div></div><div class="ring-stat-item"><div class="ring-stat-val">3.82%</div><div class="ring-stat-lbl">CVR</div></div></div></div></div></div></div>
-      <div class="grid-3"><div class="card"><div class="card-header"><div class="card-title">Traffic Sources</div></div><div class="card-body"><div class="chart-wrap" style="height:180px"><canvas id="trafficChart"></canvas></div></div></div>
-      <div class="card"><div class="card-header"><div class="card-title">Conversion Split</div></div><div class="card-body"><div class="chart-wrap" style="height:150px;width:150px;margin:0 auto"><canvas id="pieChart"></canvas></div><div id="pieLegend" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;justify-content:center"></div></div></div>
-      <div class="card"><div class="card-header"><div class="card-title">Engagement</div></div><div class="card-body"><div class="chart-wrap" style="height:130px"><canvas id="engageChart"></canvas></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px"><div style="background:var(--bg);border-radius:10px;padding:12px"><div style="font-size:18px;font-weight:800">68.4%</div><div style="font-size:11px">Returning</div></div><div style="background:var(--bg);border-radius:10px;padding:12px"><div style="font-size:18px;font-weight:800">31.6%</div><div style="font-size:11px">New Visitors</div></div></div></div></div></div>
-      <div class="grid-2"><div class="pastel-grid"><div class="pastel-card" style="background:linear-gradient(135deg,#e9d5ff,#ddd6fe)" onclick="toastMsg('📊 Sport analytics')"><div class="p-icon">📊</div><div class="p-label">Sport Data</div><div class="p-value">2,840</div><div class="p-sub">Active keep</div><div class="p-arrow">→</div></div>
-      <div class="pastel-card" style="background:linear-gradient(135deg,#fbcfe8,#f9a8d4)" onclick="toastMsg('❤️ Heart metrics')"><div class="p-icon">❤️</div><div class="p-label">Heart Health</div><div class="p-value">87 bpm</div><div class="p-sub">Enjoy life</div><div class="p-arrow">→</div></div>
-      <div class="pastel-card" style="background:linear-gradient(135deg,#bae6fd,#7dd3fc)" onclick="toastMsg('😴 Sleep details')"><div class="p-icon">😴</div><div class="p-label">Sleep Quality</div><div class="p-value">7h 42m</div><div class="p-sub">Recovery</div><div class="p-arrow">→</div></div>
-      <div class="pastel-card" style="background:linear-gradient(135deg,#fde68a,#fcd34d)" onclick="toastMsg('⚖️ Body composition')"><div class="p-icon">⚖️</div><div class="p-label">BMI</div><div class="p-value">1278 kcal</div><div class="p-sub">Control weight</div><div class="p-arrow">→</div></div></div>
-      <div class="card"><div class="card-header"><div><div class="card-title">Recent Activity</div><div class="card-sub">Live feed</div></div><span class="chip chip-green" style="font-size:10px">● Live</span></div><div class="card-body"><div id="activity-feed"></div></div></div></div>
+      <div class="kpi-grid">
+        <div class="kpi-card"><div class="kpi-blob" style="background:var(--lavender)"></div><div class="kpi-icon" style="background:#ede9fe">💰</div><div class="kpi-label">Total Revenue</div><div class="kpi-value" id="rev-val">$0</div><span class="kpi-change up">↑ 18.4%</span></div>
+        <div class="kpi-card"><div class="kpi-blob" style="background:var(--pink)"></div><div class="kpi-icon" style="background:#fce7f3">👥</div><div class="kpi-label">Active Users</div><div class="kpi-value" id="usr-val">0</div><span class="kpi-change up">↑ 12.1%</span></div>
+        <div class="kpi-card"><div class="kpi-blob" style="background:var(--mint)"></div><div class="kpi-icon" style="background:#d1fae5">🎯</div><div class="kpi-label">Conversion Rate</div><div class="kpi-value" id="cvr-val">0%</div><span class="kpi-change up">↑ 0.6%</span></div>
+        <div class="kpi-card"><div class="kpi-blob" style="background:var(--peach)"></div><div class="kpi-icon" style="background:#ffedd5">⏱️</div><div class="kpi-label">Avg Session</div><div class="kpi-value" id="sess-val">0s</div><span class="kpi-change down">↓ 0.3%</span></div>
+      </div>
+      
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-header">
+            <div><div class="card-title">Revenue Analytics</div><div class="card-sub">Actual vs Predicted</div></div>
+            <div class="flex gap-2"><span class="chip chip-purple">Actual</span><span class="chip chip-outline">Predicted</span></div>
+          </div>
+          <div class="card-body"><div class="chart-wrap"><canvas id="revenueChart"></canvas></div></div>
+        </div>
+        <div class="progress-hero">
+          <div style="position:relative;z-index:1">
+            <div class="ring-label">Monthly Progress</div>
+            <div class="ring-container">
+              <div style="position:relative">
+                <svg width="130" height="130" style="transform:rotate(-90deg)"><circle cx="65" cy="65" r="55" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="10"/><circle cx="65" cy="65" r="55" fill="none" stroke="white" stroke-width="10" stroke-dasharray="345.4" stroke-dashoffset="34.5" stroke-linecap="round" id="progressRing"/></svg>
+                <div style="position:absolute;text-align:center;top:37%;left:0;right:0"><div style="font-size:24px;font-weight:800">90%</div><div style="font-size:10px;opacity:.7">of target</div></div>
+              </div>
+              <div class="ring-stats">
+                <div class="ring-stat-item"><div class="ring-stat-val">$91.2K</div><div class="ring-stat-lbl">Revenue</div></div>
+                <div class="ring-stat-item"><div class="ring-stat-val">24.8K</div><div class="ring-stat-lbl">Users</div></div>
+                <div class="ring-stat-item"><div class="ring-stat-val">3.82%</div><div class="ring-stat-lbl">CVR</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="grid-3">
+        <div class="card"><div class="card-header"><div class="card-title">Traffic Sources</div></div><div class="card-body"><div class="chart-wrap" style="height:180px"><canvas id="trafficChart"></canvas></div></div></div>
+        <div class="card"><div class="card-header"><div class="card-title">Conversion Split</div></div><div class="card-body"><div class="chart-wrap" style="height:150px;width:150px;margin:0 auto"><canvas id="pieChart"></canvas></div><div id="pieLegend" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;justify-content:center"></div></div></div>
+        <div class="card">
+          <div class="card-header"><div class="card-title">Engagement</div></div>
+          <div class="card-body">
+            <div class="chart-wrap" style="height:110px"><canvas id="engageChart"></canvas></div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px">
+              <div style="background:var(--bg);border-radius:10px;padding:12px"><div style="font-size:16px;font-weight:800">68.4%</div><div style="font-size:11px;color:var(--text-2)">Returning</div></div>
+              <div style="background:var(--bg);border-radius:10px;padding:12px"><div style="font-size:16px;font-weight:800">31.6%</div><div style="font-size:11px;color:var(--text-2)">New Visitors</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="grid-2">
+        <div class="pastel-grid">
+          <div class="pastel-card" style="background:linear-gradient(135deg,#e9d5ff,#ddd6fe)" onclick="toastMsg('📊 Sport analytics')"><div class="p-icon">📊</div><div class="p-label">Sport Data</div><div class="p-value">2,840</div><div class="p-sub">Active keep</div><div class="p-arrow">→</div></div>
+          <div class="pastel-card" style="background:linear-gradient(135deg,#fbcfe8,#f9a8d4)" onclick="toastMsg('❤️ Heart metrics')"><div class="p-icon">❤️</div><div class="p-label">Heart Health</div><div class="p-value">87 bpm</div><div class="p-sub">Enjoy life</div><div class="p-arrow">→</div></div>
+          <div class="pastel-card" style="background:linear-gradient(135deg,#bae6fd,#7dd3fc)" onclick="toastMsg('😴 Sleep details')"><div class="p-icon">😴</div><div class="p-label">Sleep Quality</div><div class="p-value">7h 42m</div><div class="p-sub">Recovery</div><div class="p-arrow">→</div></div>
+          <div class="pastel-card" style="background:linear-gradient(135deg,#fde68a,#fcd34d)" onclick="toastMsg('⚖️ Body composition')"><div class="p-icon">⚖️</div><div class="p-label">BMI</div><div class="p-value">1278 kcal</div><div class="p-sub">Control weight</div><div class="p-arrow">→</div></div>
+        </div>
+        <div class="card"><div class="card-header"><div><div class="card-title">Recent Activity</div><div class="card-sub">Live feed</div></div><span class="chip chip-green" style="font-size:10px">● Live</span></div><div class="card-body"><div id="activity-feed"></div></div></div>
+      </div>
     </div>
-    <!-- ANALYTICS, AI, etc simplified but all functional -->
-    <div class="page" id="page-analytics"><div class="greeting"><h1>Analytics <em>Deep Dive</em></h1></div><div class="kpi-grid" style="grid-template-columns:repeat(4,1fr)"><div class="kpi-card"><div class="kpi-icon">🌐</div><div class="kpi-label">Sessions</div><div class="kpi-value">482K</div><span class="kpi-change up">↑9%</span></div><div class="kpi-card"><div class="kpi-icon">📉</div><div class="kpi-label">Bounce</div><div class="kpi-value">34.2%</div></div><div class="kpi-card"><div class="kpi-icon">📄</div><div class="kpi-label">Pages/Session</div><div class="kpi-value">4.7</div></div><div class="kpi-card"><div class="kpi-icon">🛒</div><div class="kpi-label">Transactions</div><div class="kpi-value">3,481</div></div></div><div class="grid-2"><div class="card"><div class="card-header"><div class="card-title">Revenue Trend</div></div><div class="card-body"><div class="chart-wrap" style="height:240px"><canvas id="revTrend"></canvas></div></div></div><div class="card"><div class="card-header"><div class="card-title">Weekly Traffic</div></div><div class="card-body"><div class="chart-wrap" style="height:240px"><canvas id="weekTraffic"></canvas></div></div></div></div><div class="card"><div class="card-header"><div class="card-title">Top Pages</div></div><div class="card-body"><div class="table-wrap"><table><thead><tr><th>Page</th><th>Sessions</th><th>Bounce</th><th>Conv.</th><th>Revenue</th></tr></thead><tbody id="pages-table"></tbody></table></div></div></div></div>
-    <div class="page" id="page-ai"><div class="greeting"><h1>AI <em>Insights Engine</em></h1></div><div class="grid-2"><div class="ai-hero"><div class="ai-grid-bg"></div><div style="position:relative"><div class="ai-header"><div class="ai-pulse"></div><span class="ai-badge">✦ AI ACTIVE</span></div><div style="font-size:22px;font-weight:700;color:white">3 New Insights</div><div class="ai-insights"><div class="ai-row"><span class="ai-row-icon">📈</span><span class="ai-row-text"><strong>Revenue spike:</strong> Email campaign boosted 23% revenue.</span></div><div class="ai-row"><span class="ai-row-icon">⚠️</span><span class="ai-row-text"><strong>Organic traffic drop</strong> – refresh content.</span></div><div class="ai-row"><span class="ai-row-icon">🎯</span><span class="ai-row-text"><strong>Checkout abandonment:</strong> CTA test may recover $4.2k.</span></div></div><button class="ai-generate-btn" onclick="generateInsight()">✦ Generate New Analysis</button></div></div><div><div class="card"><div class="card-header"><div class="card-title">Predictive Forecast</div></div><div class="card-body"><div class="chart-wrap" style="height:160px"><canvas id="forecastChart"></canvas></div></div></div><div class="card"><div class="card-header"><div class="card-title">Growth Score</div></div><div class="card-body"><div id="score-bars"></div></div></div></div></div><div class="grid-3" style="margin-top:20px"><div class="card" style="border-top:3px solid #7c3aed"><div class="card-body"><div style="font-weight:700">Trend Forecast</div><div style="font-size:13px">Revenue predicted $98K–$104K</div><span class="chip chip-purple">87% confidence</span></div></div><div class="card" style="border-top:3px solid #ec4899"><div class="card-body"><div style="font-weight:700">Growth Opportunity</div><div style="font-size:13px">US West Coast converts 3x more</div><span class="chip chip-pink">ROI 460%</span></div></div><div class="card" style="border-top:3px solid #059669"><div class="card-body"><div style="font-weight:700">August Best Month</div><div style="font-size:13px">+31% organic growth</div><span class="chip chip-green">Action Required</span></div></div></div></div>
-    <div class="page" id="page-integrations"><div class="greeting"><h1>Integrations</h1></div><div class="card"><div class="card-header"><div class="card-title">Connected Sources</div></div><div class="card-body"><div class="integration-grid" id="int-grid"></div></div></div><div class="card"><div class="card-header"><div class="card-title">Available Integrations</div></div><div class="card-body"><div class="integration-grid" id="int-available"></div></div></div></div>
-    <div class="page" id="page-reports"><div class="greeting"><h1>Reports & Exports</h1></div><div class="grid-half"><div class="card"><div class="card-header"><div class="card-title">Saved Reports</div></div><div class="card-body" id="saved-reports"></div></div><div class="card"><div class="card-header"><div class="card-title">Create Report</div></div><div class="card-body"><button class="btn-sm btn-primary w-full" onclick="toastMsg('📊 Demo report')">Generate</button></div></div></div></div>
-    <div class="page" id="page-team"><div class="greeting"><h1>Team Collaboration</h1></div><div class="card"><div class="card-header"><div class="card-title">Members</div><button class="btn-sm btn-primary" onclick="toastMsg('Invite mock')">+ Invite</button></div><div class="card-body"><div class="table-wrap"><table><thead><tr><th>Member</th><th>Role</th><th>Status</th></tr></thead><tbody id="team-table"></tbody></table></div></div></div></div>
-    <div class="page" id="page-settings"><div class="greeting"><h1>Settings</h1></div><div class="card"><div class="card-body"><div class="settings-title">Profile</div><div class="form-row"><div class="form-group"><label>First Name</label><input class="form-input" value="Rownok" /></div><div class="form-group"><label>Last Name</label><input class="form-input" value="Ahmed" /></div></div><button class="btn-sm btn-primary" onclick="toastMsg('Saved (demo)')">Save</button></div></div></div>
-    <div class="page" id="page-billing"><div class="greeting"><h1>Billing</h1></div><div class="grid-3"><div class="plan-card selected"><div class="plan-name">Pro Plan</div><div class="plan-price">$79</div><button class="btn-sm btn-primary">Current</button></div></div><div class="card"><div class="card-body"><div class="table-wrap"><table><thead><tr><th>Date</th><th>Amount</th></tr></thead><tbody id="billing-table"></tbody></table></div></div></div></div>
+    
+    <!-- ANALYTICS PAGE -->
+    <div class="page" id="page-analytics">
+      <div class="greeting"><h1>Analytics <em>Deep Dive</em></h1></div>
+      <div class="kpi-grid">
+        <div class="kpi-card"><div class="kpi-icon">🌐</div><div class="kpi-label">Sessions</div><div class="kpi-value">482K</div><span class="kpi-change up">↑ 9%</span></div>
+        <div class="kpi-card"><div class="kpi-icon">📉</div><div class="kpi-label">Bounce Rate</div><div class="kpi-value">34.2%</div></div>
+        <div class="kpi-card"><div class="kpi-icon">📄</div><div class="kpi-label">Pages / Session</div><div class="kpi-value">4.7</div></div>
+        <div class="kpi-card"><div class="kpi-icon">🛒</div><div class="kpi-label">Transactions</div><div class="kpi-value">3,481</div></div>
+      </div>
+      <div class="grid-2">
+        <div class="card"><div class="card-header"><div class="card-title">Revenue Trend</div></div><div class="card-body"><div class="chart-wrap" style="height:240px"><canvas id="revTrend"></canvas></div></div></div>
+        <div class="card"><div class="card-header"><div class="card-title">Weekly Traffic</div></div><div class="card-body"><div class="chart-wrap" style="height:240px"><canvas id="weekTraffic"></canvas></div></div></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-title">Top Landing Pages</div></div>
+        <div class="card-body"><div class="table-wrap"><table><thead><tr><th>Page</th><th>Sessions</th><th>Bounce</th><th>Conv.</th><th>Revenue</th></tr></thead><tbody id="pages-table"></tbody></table></div></div>
+      </div>
+    </div>
+    
+    <!-- AI INSIGHTS PAGE -->
+    <div class="page" id="page-ai">
+      <div class="greeting"><h1>AI <em>Insights Engine</em></h1></div>
+      <div class="grid-2">
+        <div class="ai-hero">
+          <div style="position:relative">
+            <div class="ai-badge" style="margin-bottom:10px; display:inline-block;">✦ AI ACTIVE</div>
+            <div style="font-size:22px;font-weight:700;color:white">3 Core Structural Forecasts</div>
+            <div class="ai-insights">
+              <div class="ai-row"><span>📈</span><span><strong>Revenue spike:</strong> Email campaign boosted 23% revenue velocity.</span></div>
+              <div class="ai-row"><span>⚠️</span><span><strong>Organic traffic drop</strong> – standard domain update requires content refresh.</span></div>
+              <div class="ai-row"><span>🎯</span><span><strong>Checkout abandonment:</strong> Alternative CTA path configuration recovered $4.2k.</span></div>
+            </div>
+            <button class="ai-generate-btn" onclick="generateInsight()">✦ Generate New Analysis</button>
+          </div>
+        </div>
+        <div>
+          <div class="card" style="margin-bottom:1.5rem;"><div class="card-header"><div class="card-title">Predictive Forecast</div></div><div class="card-body"><div class="chart-wrap" style="height:150px"><canvas id="forecastChart"></canvas></div></div></div>
+          <div class="card">
+            <div class="card-header"><div class="card-title">Growth Vector Metrics</div></div>
+            <div class="card-body" id="score-bars" style="display:flex; flex-direction:column; gap:12px;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DATA INTEGRATIONS -->
+    <div class="page" id="page-integrations">
+      <div class="greeting"><h1>Integrations</h1></div>
+      <div class="card" style="margin-bottom:1.5rem;"><div class="card-header"><div class="card-title">Connected Sources</div></div><div class="card-body"><div class="integration-grid" id="int-grid"></div></div></div>
+      <div class="card"><div class="card-header"><div class="card-title">Available Integrations</div></div><div class="card-body"><div class="integration-grid" id="int-available"></div></div></div>
+    </div>
+
+    <!-- REPORTS -->
+    <div class="page" id="page-reports">
+      <div class="greeting"><h1>Reports & Exports</h1></div>
+      <div class="grid-2">
+        <div class="card"><div class="card-header"><div class="card-title">Saved Reports</div></div><div class="card-body" id="saved-reports"></div></div>
+        <div class="card"><div class="card-header"><div class="card-title">Create Report Framework</div></div><div class="card-body"><button class="btn-sm btn-primary" style="width:100%;" onclick="toastMsg('📊 Compiling architecture details...')">Generate Framework Report</button></div></div>
+      </div>
+    </div>
+
+    <!-- TEAM COLLABORATION -->
+    <div class="page" id="page-team">
+      <div class="greeting"><h1>Team Collaboration</h1></div>
+      <div class="card">
+        <div class="card-header"><div class="card-title">Active Directory Members</div><button class="btn-sm btn-primary" onclick="toastMsg('Invite interface active')">+ Invite Member</button></div>
+        <div class="card-body"><div class="table-wrap"><table><thead><tr><th>Member</th><th>Role</th><th>Status</th></tr></thead><tbody id="team-table"></tbody></table></div></div>
+      </div>
+    </div>
+
+    <!-- SETTINGS -->
+    <div class="page" id="page-settings">
+      <div class="greeting"><h1>Settings</h1></div>
+      <div class="card">
+        <div class="card-body">
+          <div class="card-title" style="margin-bottom:1rem;">User Profile Configuration</div>
+          <div class="form-row">
+            <div class="form-group"><label>First Name</label><input class="form-input" value="Rownok" /></div>
+            <div class="form-group"><label>Last Name</label><input class="form-input" value="Ahmed" /></div>
+          </div>
+          <button class="btn-sm btn-primary" onclick="toastMsg('Configuration Saved Successfully')">Save Profiles</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- BILLING -->
+    <div class="page" id="page-billing">
+      <div class="greeting"><h1>Billing System</h1></div>
+      <div class="card" style="margin-bottom:1.5rem;">
+        <div class="card-body">
+          <div style="font-weight:700; font-size:1.1rem; margin-bottom:4px;">Pro Enterprise Plan</div>
+          <div style="font-size:1.8rem; font-weight:800; margin-bottom:12px;">$79 <span style="font-size:0.9rem; font-weight:400; color:var(--text-2);">/ month</span></div>
+          <span class="chip chip-purple">Active Plan</span>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-title">Invoicing Ledger</div></div>
+        <div class="card-body"><div class="table-wrap"><table><thead><tr><th>Billing Date</th><th>Amount Billed</th></tr></thead><tbody id="billing-table"></tbody></table></div></div>
+      </div>
+    </div>
   </div>
 </div>
 
 <script>
-  // ---------- AUTH SYSTEM (ZERO BUG) ----------
+  // ---------- AUTH CORE SYSTEM ----------
   let currentUser = null;
   const STORAGE_USERS = "growthos_users";
   const STORAGE_SESSION = "growthos_session";
 
-  // Init default users
   function initUserStore() {
     if (!localStorage.getItem(STORAGE_USERS)) {
       const defaultUsers = [
-        { email: "demo@growthos.ai", password: btoa("demo123"), name: "Rownok" },
-        { email: "test@example.com", password: btoa("test123"), name: "Test" }
+        { email: "demo@growthos.ai", password: btoa("demo123"), name: "Rownok Ahmed" },
+        { email: "test@example.com", password: btoa("test123"), name: "Test Identity" }
       ];
       localStorage.setItem(STORAGE_USERS, JSON.stringify(defaultUsers));
     }
   }
 
-  function getUsers() {
-    return JSON.parse(localStorage.getItem(STORAGE_USERS) || "[]");
-  }
-
-  function saveUsers(users) {
-    localStorage.setItem(STORAGE_USERS, JSON.stringify(users));
-  }
-
+  function getUsers() { return JSON.parse(localStorage.getItem(STORAGE_USERS) || "[]"); }
+  function saveUsers(users) { localStorage.setItem(STORAGE_USERS, JSON.stringify(users)); }
   function hashPass(pwd) { return btoa(pwd); }
 
   function authenticate(email, password) {
@@ -386,7 +832,7 @@
 
   function registerUser(email, password, name) {
     const users = getUsers();
-    if (users.find(u => u.email === email)) return { success: false, error: "Email already exists" };
+    if (users.find(u => u.email === email)) return { success: false, error: "Email target exists" };
     users.push({ email, password: hashPass(password), name: name || email.split('@')[0] });
     saveUsers(users);
     return { success: true };
@@ -397,10 +843,7 @@
     localStorage.setItem(STORAGE_SESSION, JSON.stringify({ email: user.email, name: user.name, timestamp: Date.now() }));
   }
 
-  function clearSession() {
-    currentUser = null;
-    localStorage.removeItem(STORAGE_SESSION);
-  }
+  function clearSession() { currentUser = null; localStorage.removeItem(STORAGE_SESSION); }
 
   function getSession() {
     const raw = localStorage.getItem(STORAGE_SESSION);
@@ -416,64 +859,52 @@
     } catch(e) { return null; }
   }
 
-  // UI auth logic
-  let activeAuthMode = "login"; // login / signup
+  let activeAuthMode = "login";
 
   function renderAuthForm() {
     const container = document.getElementById("authFormContainer");
     if (activeAuthMode === "login") {
       container.innerHTML = `
-        <div class="auth-field"><input type="email" id="loginEmail" placeholder="Email address" autocomplete="email" /></div>
-        <div class="auth-field"><input type="password" id="loginPassword" placeholder="Password" /></div>
+        <div class="auth-field"><input type="email" id="loginEmail" placeholder="Email address" autocomplete="email" value="demo@growthos.ai" /></div>
+        <div class="auth-field"><input type="password" id="loginPassword" placeholder="Password" value="demo123" /></div>
         <div id="authError" class="error-msg"></div>
-        <button class="auth-btn" id="doLoginBtn">Sign in →</button>
-        <p style="font-size:12px;text-align:center;margin-top:1rem;">Demo: demo@growthos.ai / demo123</p>
+        <button class="auth-btn" onclick="submitLogin()">Sign in →</button>
+        <p style="font-size:12px;text-align:center;margin-top:1.2rem;color:var(--text-2);">Default Access: demo@growthos.ai / demo123</p>
       `;
-      document.getElementById("doLoginBtn")?.addEventListener("click", () => handleLogin());
     } else {
       container.innerHTML = `
         <div class="auth-field"><input type="text" id="signupName" placeholder="Full name" /></div>
         <div class="auth-field"><input type="email" id="signupEmail" placeholder="Email address" /></div>
-        <div class="auth-field"><input type="password" id="signupPassword" placeholder="Password (min 6 chars)" /></div>
+        <div class="auth-field"><input type="password" id="signupPassword" placeholder="Password" /></div>
         <div class="auth-field"><input type="password" id="signupConfirm" placeholder="Confirm password" /></div>
         <div id="authError" class="error-msg"></div>
-        <button class="auth-btn" id="doSignupBtn">Create account →</button>
+        <button class="auth-btn" onclick="submitSignup()">Create account →</button>
       `;
-      document.getElementById("doSignupBtn")?.addEventListener("click", () => handleSignup());
     }
   }
 
-  function handleLogin() {
+  function submitLogin() {
     const email = document.getElementById("loginEmail")?.value.trim();
     const pwd = document.getElementById("loginPassword")?.value;
     const errorDiv = document.getElementById("authError");
-    if (!email || !pwd) { errorDiv.innerText = "Please fill all fields"; return; }
+    if (!email || !pwd) { errorDiv.innerText = "All authentication fields required"; return; }
     const user = authenticate(email, pwd);
-    if (user) {
-      setSession(user);
-      showAppAfterAuth();
-    } else {
-      errorDiv.innerText = "Invalid email or password";
-    }
+    if (user) { setSession(user); showAppAfterAuth(); } else { errorDiv.innerText = "Invalid security credentials"; }
   }
 
-  function handleSignup() {
+  function submitSignup() {
     const name = document.getElementById("signupName")?.value.trim();
     const email = document.getElementById("signupEmail")?.value.trim();
     const pwd = document.getElementById("signupPassword")?.value;
     const confirm = document.getElementById("signupConfirm")?.value;
     const errorDiv = document.getElementById("authError");
-    if (!name || !email || !pwd || !confirm) { errorDiv.innerText = "All fields required"; return; }
+    if (!name || !email || !pwd || !confirm) { errorDiv.innerText = "Parameters validation failed"; return; }
     if (pwd !== confirm) { errorDiv.innerText = "Passwords do not match"; return; }
-    if (pwd.length < 4) { errorDiv.innerText = "Password min 4 characters"; return; }
     const res = registerUser(email, pwd, name);
     if (res.success) {
       const newUser = authenticate(email, pwd);
       if (newUser) { setSession(newUser); showAppAfterAuth(); }
-      else errorDiv.innerText = "Error creating account";
-    } else {
-      errorDiv.innerText = res.error;
-    }
+    } else { errorDiv.innerText = res.error; }
   }
 
   function showAppAfterAuth() {
@@ -487,7 +918,7 @@
       document.getElementById("userAvatarInitial").innerText = session.name.charAt(0).toUpperCase();
       document.getElementById("headerAvatar").innerText = session.name.charAt(0).toUpperCase();
     }
-    initDashboard(); // load charts, data
+    initDashboard();
   }
 
   function handleLogout() {
@@ -502,77 +933,150 @@
     toastMsg("👋 Signed out successfully");
   }
 
-  // wrap logout globally
   window.handleLogout = handleLogout;
 
-  // ---------- ADVANCED UI + CHARTS ----------
-  let chartsInitialized = false;
+  // ---------- CHART REUSE (NO BUG) ----------
+  let activeChartInstances = {};
+
+  function secureChartRender(canvasId, config) {
+    if (activeChartInstances[canvasId]) activeChartInstances[canvasId].destroy();
+    const ctx = document.getElementById(canvasId);
+    if (ctx) activeChartInstances[canvasId] = new Chart(ctx, config);
+  }
+
+  // ---------- INTERIOR METRICS ENGINE INITIALIZATION ----------
   function initDashboard() {
-    if (chartsInitialized) return;
-    chartsInitialized = true;
-    // KPI counters
     function countUp(el, target, prefix='', suffix='') {
-      let start = 0;
-      let step = target / 60;
+      if(!el) return;
+      let start = 0, step = target / 40;
       let interval = setInterval(() => {
         start = Math.min(start + step, target);
         el.textContent = prefix + (Number.isInteger(target) ? Math.floor(start).toLocaleString() : start.toFixed(2)) + suffix;
         if (start >= target) clearInterval(interval);
       }, 20);
     }
+    
     countUp(document.getElementById('rev-val'), 91240, '$', '');
     countUp(document.getElementById('usr-val'), 24891, '', '');
     countUp(document.getElementById('cvr-val'), 3.82, '', '%');
     countUp(document.getElementById('sess-val'), 263, '', 's');
 
     const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug'];
-    const revenueActual = [42000,51000,47000,63000,71000,68000,82000,91000];
-    const revenuePredicted = [38000,44000,49000,56000,62000,70000,74000,85000];
-    const trafficSessions = [3200,4100,3800,5200,4700,2900,2400];
-    const DAYS = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+    
+    secureChartRender('revenueChart', {
+      type: 'line',
+      data: {
+        labels: MONTHS,
+        datasets: [
+          { label: 'Actual', data: [42000,51000,47000,63000,71000,68000,82000,91000], borderColor: '#7c3aed', tension: 0.35, fill: false },
+          { label: 'Predicted', data: [38000,44000,49000,56000,62000,70000,74000,85000], borderColor: '#ec4899', borderDash: [5,5], fill: false }
+        ]
+      },
+      options: { responsive: true, maintainAspectRatio: false }
+    });
 
-    new Chart(document.getElementById('revenueChart'), { type:'line', data:{ labels:MONTHS, datasets:[{ label:'Actual', data:revenueActual, borderColor:'#7c3aed', fill:true, tension:0.4 },{ label:'Predicted', data:revenuePredicted, borderColor:'#ec4899', borderDash:[5,5] }] }, options:{ responsive:true, maintainAspectRatio:false } });
-    new Chart(document.getElementById('trafficChart'), { type:'bar', data:{ labels:DAYS, datasets:[{ data:trafficSessions, backgroundColor:'#c4b5fd' }] }, options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{display:false} } } });
-    new Chart(document.getElementById('pieChart'), { type:'doughnut', data:{ labels:['Direct','Organic','Referral','Social'], datasets:[{ data:[38,27,19,16], backgroundColor:['#a78bfa','#f9a8d4','#6ee7b7','#fde68a'], borderWidth:0 }] }, options:{ cutout:'65%', plugins:{ legend:{display:false} } } });
-    new Chart(document.getElementById('engageChart'), { type:'line', data:{ labels:[1,2,3,4,5,6,7,8,9,10,11,12], datasets:[{ data:[1200,1800,1400,2100,1900,2400,2200,2800,2600,3100,2900,3400], borderColor:'#6ee7b7', fill:true }] }, options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{display:false} }, scales:{ x:{display:false}, y:{display:false} } } });
-    new Chart(document.getElementById('revTrend'), { type:'line', data:{ labels:MONTHS, datasets:[{ label:'Revenue', data:revenueActual, borderColor:'#7c3aed' }] }, options:{ responsive:true } });
-    new Chart(document.getElementById('weekTraffic'), { type:'bar', data:{ labels:DAYS, datasets:[{ data:trafficSessions, backgroundColor:'#f9a8d4' }] } });
-    new Chart(document.getElementById('forecastChart'), { type:'line', data:{ labels:['Aug','Sep','Oct','Nov','Dec','Jan'], datasets:[{ label:'Forecast', data:[91000,93500,96000,98200,101000,104500], borderColor:'#a78bfa', fill:true }] } });
-    populatePagesTable(); populateActivity(); populateIntegrations(); populateTeam(); populateBilling(); populateReports(); populateScores();
+    secureChartRender('trafficChart', {
+      type: 'bar',
+      data: {
+        labels: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
+        datasets: [{ data: [3200,4100,3800,5200,4700,2900,2400], backgroundColor: '#c4b5fd', borderRadius: 6 }]
+      },
+      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
+    });
+
+    secureChartRender('pieChart', {
+      type: 'doughnut',
+      data: {
+        labels: ['Direct','Organic','Referral','Social'],
+        datasets: [{ data: [38,27,19,16], backgroundColor: ['#a78bfa','#f9a8d4','#6ee7b7','#fde68a'], borderWidth: 0 }]
+      },
+      options: { cutout: '70%', plugins: { legend: { display: false } } }
+    });
+
+    secureChartRender('engageChart', {
+      type: 'line',
+      data: {
+        labels: [1,2,3,4,5,6,7,8,9,10,11,12],
+        datasets: [{ data: [1200,1800,1400,2100,1900,2400,2200,2800,2600,3100,2900,3400], borderColor: '#6ee7b7', tension: 0.4, pointRadius: 0, fill: false }]
+      },
+      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { display: false }, y: { display: false } } }
+    });
+
+    // Populate Sub-tables & Lists
+    populatePagesTable(); 
+    populateActivity(); 
+    populateIntegrations(); 
+    populateTeam(); 
+    populateBilling(); 
+    populateReports(); 
+    populateScores();
   }
 
-  function populatePagesTable() { const tbody=document.getElementById('pages-table'); if(tbody) tbody.innerHTML=`<tr><td>/home</td><td>124K</td><td>28%</td><td>4.2%</td><td>$32K</td></tr><tr><td>/pricing</td><td>84K</td><td>38%</td><td>6.1%</td><td>$21K</td></tr><tr><td>/features</td><td>67K</td><td>31%</td><td>2.9%</td><td>$11K</td></tr>`; }
-  function populateActivity() { const feed=[{icon:'💰',bg:'#ede9fe',title:'New transaction $1,240',time:'2 min'},{icon:'👤',bg:'#fce7f3',title:'New user signup',time:'5 min'}]; document.getElementById('activity-feed').innerHTML=feed.map(f=>`<div class="feed-item"><div class="feed-icon" style="background:${f.bg}">${f.icon}</div><div class="feed-content"><div class="feed-title">${f.title}</div><div class="feed-time">${f.time}</div></div></div>`).join(''); }
-  function populateIntegrations() { document.getElementById('int-grid').innerHTML=`<div class="int-tile"><div class="int-logo">📊</div><div>GA4</div><div class="int-status int-connected">✓</div></div><div class="int-tile"><div>💰</div><div>Stripe</div><div class="int-status int-connected">✓</div></div>`; document.getElementById('int-available').innerHTML=`<div class="int-tile">📦 Shopify<div class="int-status">Connect</div></div><div class="int-tile">📬 Mailchimp<div>Connect</div></div>`; }
-  function populateTeam() { document.getElementById('team-table').innerHTML=`<tr><td>Rownok Ahmed</td><td><span class="chip chip-purple">Owner</span></td><td>Active</td></tr><tr><td>Sarah Chen</td><td><span class="chip chip-pink">Admin</span></td><td>Active</td></tr>`; }
-  function populateBilling() { document.getElementById('billing-table').innerHTML=`<tr><td>Aug 1, 2024</td><td>$79.00</td></tr><tr><td>Jul 1, 2024</td><td>$79.00</td></tr>`; }
-  function populateReports() { document.getElementById('saved-reports').innerHTML=`<div class="report-item"><div class="report-icon">📄</div><div>Monthly Revenue Aug 2024</div><button class="btn-sm btn-primary" onclick="toastMsg('Download')">Get</button></div>`; }
-  function populateScores() { document.getElementById('score-bars').innerHTML=`<div><div>Revenue Growth</div><div style="background:#e9e9ef;border-radius:10px"><div style="width:87%;background:#7c3aed;height:8px;border-radius:10px"></div></div><div>87%</div></div><div><div>User Retention</div><div><div style="width:73%;background:#ec4899;height:8px"></div></div><div>73%</div></div>`; }
+  function populatePagesTable() {
+    const tbody = document.getElementById('pages-table');
+    if(tbody) tbody.innerHTML = `<tr><td>/home</span></td><td>124K</span></td><td>28%</span></td><td>4.2%</span><td>$32K</span></tr><tr><td>/pricing</span></td><td>84K</span></td><td>38%</span></td><td>6.1%</span><td>$21K</span></tr><tr><td>/features</span></td><td>67K</span></td><td>31%</span></td><td>2.9%</span><td>$11K</span></tr>`;
+  }
+  
+  function populateActivity() {
+    const feed = [{icon:'💰',bg:'#ede9fe',title:'New core transaction processed $1,240',time:'2 min ago'},{icon:'👤',bg:'#fce7f3',title:'New account user registered space verified',time:'5 min ago'}];
+    document.getElementById('activity-feed').innerHTML = feed.map(f => `<div class="feed-item"><div class="feed-icon" style="background:${f.bg}">${f.icon}</div><div class="feed-content"><div class="feed-title">${f.title}</div><div class="feed-time">${f.time}</div></div></div>`).join('');
+  }
+  
+  function populateIntegrations() {
+    document.getElementById('int-grid').innerHTML = `<div class="int-tile"><div>📊 GA4 Metrics</div><div class="int-status int-connected">Connected</div></div><div class="int-tile"><div>💰 Stripe API</div><div class="int-status int-connected">Connected</div></div>`;
+    document.getElementById('int-available').innerHTML = `<div class="int-tile"><div>📦 Shopify Sync</div><div class="int-status" style="color:var(--lavender-d)">Connect</div></div><div class="int-tile"><div>📬 Mailchimp Hub</div><div class="int-status" style="color:var(--lavender-d)">Connect</div></div>`;
+  }
+  
+  function populateTeam() { document.getElementById('team-table').innerHTML = `<tr><td>Rownok Ahmed</span></td><td><span class="chip chip-purple">Root Owner</span></span></td><td>Active Cluster</span></tr><tr><td>Sarah Chen</span></td><td><span class="chip chip-pink">System Admin</span></span></td><td>Active Session</span></tr>`; }
+  function populateBilling() { document.getElementById('billing-table').innerHTML = `<tr><td>August 01, 2026</span><td>$79.00 USD</span></tr><tr><td>July 01, 2026</span><td>$79.00 USD</span></tr>`; }
+  function populateReports() { document.getElementById('saved-reports').innerHTML = `<div class="report-item"><div>📄 Monthly Segment Distribution Report Aug 2026</div><button class="btn-sm btn-primary" onclick="toastMsg('Downloading Ledger...')">Download</button></div>`; }
+  
+  function populateScores() {
+    document.getElementById('score-bars').innerHTML = `
+      <div><div style="display:flex; justify-content:space-between; font-size:0.85rem; margin-bottom:4px;"><span>Revenue Matrix Vector</span><strong>87%</strong></div><div style="background:var(--bg); border-radius:10px; height:8px; overflow:hidden;"><div style="width:87%; background:var(--lavender-d); height:10px;"></div></div></div>
+      <div><div style="display:flex; justify-content:space-between; font-size:0.85rem; margin-bottom:4px;"><span>User Retention Loop</span><strong>73%</strong></div><div style="background:var(--bg); border-radius:10px; height:8px; overflow:hidden;"><div style="width:73%; background:var(--pink-d); height:10px;"></div></div></div>`;
+  }
 
-  window.navigate = (page, el) => { document.querySelectorAll('.page').forEach(p=>p.classList.remove('active')); document.getElementById(`page-${page}`).classList.add('active'); document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active')); if(el) el.classList.add('active'); closeSidebar(); if(page==='analytics') setTimeout(()=>{ new Chart(document.getElementById('revTrend')?.getContext('2d'),{}); },50); };
-  window.toastMsg = (msg) => { let t=document.createElement('div'); t.className='toast-custom'; t.innerText=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),2500); };
-  window.generateInsight = () => { toastMsg('✨ New AI insights generated'); };
-  window.debounceSearch = (v) => { if(v) toastMsg(`🔍 Searching: ${v}`); };
+  // ---------- WORKSPACE NAVIGATION CONTROL & LOGIC ----------
+  window.navigate = (page, el) => {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById(`page-${page}`).classList.add('active');
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    if(el) el.classList.add('active');
+    closeSidebar();
+    
+    if(page === 'analytics') {
+      setTimeout(() => {
+        secureChartRender('revTrend', { type: 'line', data: { labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug'], datasets: [{ label: 'Revenue Trend', data: [42000,51000,47000,63000,71000,68000,82000,91000], borderColor: '#7c3aed', fill: false }] } });
+        secureChartRender('weekTraffic', { type: 'bar', data: { labels: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'], datasets: [{ data: [3200,4100,3800,5200,4700,2900,2400], backgroundColor: '#f9a8d4' }] } });
+      }, 50);
+    } else if (page === 'ai') {
+      setTimeout(() => {
+        secureChartRender('forecastChart', { type: 'line', data: { labels: ['Aug','Sep','Oct','Nov','Dec','Jan'], datasets: [{ label: 'Prediction Path', data: [91000,93500,96000,98200,101000,104500], borderColor: '#a78bfa', fill: false }] } });
+      }, 50);
+    }
+  };
+
+  // UI Micro-interactions
+  window.toastMsg = (msg) => {
+    let t = document.createElement('div'); t.className = 'toast-custom'; t.innerText = msg;
+    document.body.appendChild(t); setTimeout(() => t.remove(), 2500);
+  };
+  
+  window.generateInsight = () => { toastMsg('✨ New contextual metrics maps created'); };
+  window.debounceSearch = (v) => { if(v) toastMsg(`🔍 Isolation query filters: ${v}`); };
   window.openSidebar = () => { document.getElementById('sidebar').classList.add('open'); document.getElementById('overlay').classList.add('show'); };
   window.closeSidebar = () => { document.getElementById('sidebar').classList.remove('open'); document.getElementById('overlay').classList.remove('show'); };
-  window.toggleTheme = () => { document.body.classList.toggle('dark-theme'); toastMsg('🎨 Theme toggled'); };
-  window.selectPlan = (el,name) => { toastMsg(`Plan: ${name}`); };
+  window.toggleTheme = () => { document.body.classList.toggle('dark-theme'); toastMsg('🎨 Workspace style inverted'); };
 
-  // bootstrap auth
+  // Bootstrap application
   initUserStore();
   const session = getSession();
-  if (session) {
-    currentUser = session;
-    showAppAfterAuth();
-  } else {
-    document.getElementById("sidebar").style.display = "none";
-    document.getElementById("mainApp").style.display = "none";
-    document.getElementById("authContainer").style.display = "flex";
-    renderAuthForm();
-  }
+  if (session) showAppAfterAuth();
+  else renderAuthForm();
+
   document.getElementById("authLoginBtn").addEventListener("click", () => { activeAuthMode = "login"; renderAuthForm(); document.getElementById("authLoginBtn").classList.add("active"); document.getElementById("authSignupBtn").classList.remove("active"); });
   document.getElementById("authSignupBtn").addEventListener("click", () => { activeAuthMode = "signup"; renderAuthForm(); document.getElementById("authSignupBtn").classList.add("active"); document.getElementById("authLoginBtn").classList.remove("active"); });
-  document.getElementById("logoutUserBtn")?.addEventListener("click", handleLogout);
 </script>
 </body>
 </html>
